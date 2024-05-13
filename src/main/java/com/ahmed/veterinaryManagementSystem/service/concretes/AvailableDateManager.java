@@ -1,8 +1,10 @@
-package service.concretes;
+package com.ahmed.veterinaryManagementSystem.service.concretes;
 
 import com.ahmed.veterinaryManagementSystem.repository.AvailableDateRepository;
-import service.abstracts.AvailableDateService;
+import com.ahmed.veterinaryManagementSystem.service.abstracts.AvailableDateService;
+import org.springframework.stereotype.Service;
 
+@Service
 public class AvailableDateManager implements AvailableDateService {
     private final AvailableDateRepository availableDateRepository;
 

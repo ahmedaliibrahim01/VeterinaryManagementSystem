@@ -1,20 +1,14 @@
-package com.ahmed.veterinaryManagementSystem.model;
+package com.ahmed.veterinaryManagementSystem.dto;
 
-import jakarta.persistence.*;
 import jakarta.validation.constraints.NotNull;
 import lombok.AllArgsConstructor;
 import lombok.Data;
 import lombok.NoArgsConstructor;
 
-import java.util.Set;
-
-@Entity
 @Data
 @AllArgsConstructor
 @NoArgsConstructor
-public class Customer {
-    @Id
-    @GeneratedValue(strategy = GenerationType.IDENTITY)
+public class CustomerDto {
     private Long id;
     @NotNull
     private String name;
@@ -22,7 +16,4 @@ public class Customer {
     private String mail;
     private String address;
     private String city;
-
-    @OneToMany(mappedBy = "customer")
-    private Set<Animal> animals;
 }

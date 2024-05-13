@@ -1,8 +1,10 @@
-package service.concretes;
+package com.ahmed.veterinaryManagementSystem.service.concretes;
 
 import com.ahmed.veterinaryManagementSystem.repository.DoctorRepository;
-import service.abstracts.DoctorService;
+import com.ahmed.veterinaryManagementSystem.service.abstracts.DoctorService;
+import org.springframework.stereotype.Service;
 
+@Service
 public class DoctorManager implements DoctorService {
     private final DoctorRepository doctorRepository;
 

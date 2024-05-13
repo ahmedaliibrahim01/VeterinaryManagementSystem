@@ -1,10 +1,8 @@
-package service.concretes;
+package com.ahmed.veterinaryManagementSystem.service.concretes;
 
-import com.ahmed.veterinaryManagementSystem.repository.AnimalRepository;
 import com.ahmed.veterinaryManagementSystem.repository.AppointmentRepository;
 import org.springframework.stereotype.Service;
-import service.abstracts.AnimalService;
-import service.abstracts.AppointmentService;
+import com.ahmed.veterinaryManagementSystem.service.abstracts.AppointmentService;
 
 @Service
 public class AppointmentManager implements AppointmentService {
