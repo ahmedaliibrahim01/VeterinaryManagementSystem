@@ -1,9 +1,6 @@
 package com.ahmed.veterinaryManagementSystem.model;
 
-import jakarta.persistence.Entity;
-import jakarta.persistence.GeneratedValue;
-import jakarta.persistence.GenerationType;
-import jakarta.persistence.Id;
+import jakarta.persistence.*;
 import lombok.AllArgsConstructor;
 import lombok.Data;
 import lombok.NoArgsConstructor;
@@ -19,4 +16,8 @@ public class AvailableDate {
     @GeneratedValue(strategy = GenerationType.IDENTITY)
     private Long id;
     private LocalDate availableDate;
+
+    @ManyToOne(fetch = FetchType.LAZY)
+    @JoinColumn(name = "doctor_id")
+    private Doctor doctor;
 }
