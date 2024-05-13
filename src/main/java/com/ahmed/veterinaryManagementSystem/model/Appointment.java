@@ -8,9 +8,9 @@ import jakarta.persistence.Id;
 import java.time.LocalDate;
 
 @Entity
-public class AvailableDate {
+public class Appointment {
     @Id
     @GeneratedValue(strategy = GenerationType.IDENTITY)
     private Long id;
-    private LocalDate availableDate;
+    private LocalDate appointmentDate;
 }
