@@ -1,4 +1,4 @@
-package com.ahmed.veterinaryManagementSystem.dto;
+package com.ahmed.veterinaryManagementSystem.dto.animal;
 
 import jakarta.validation.constraints.NotNull;
 import lombok.AllArgsConstructor;

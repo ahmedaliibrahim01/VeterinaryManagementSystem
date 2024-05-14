@@ -18,6 +18,10 @@ public class CustomerManager implements CustomerService {
 
     @Override
     public Customer save(Customer customer) {
+        // Check if email already exists
+        if (customerRepository.findByMail(customer.getMail()).isPresent()) {
+            throw new IllegalArgumentException("Email address is already registered.");
+        }
         return customerRepository.save(customer);
     }
 
@@ -26,7 +30,6 @@ public class CustomerManager implements CustomerService {
         return customerRepository.findById(id)
                 .orElseThrow(() -> new EntityNotFoundException("Customer not found with id: " + id));
     }
-
 
     @Override
     public List<Customer> findAll() {

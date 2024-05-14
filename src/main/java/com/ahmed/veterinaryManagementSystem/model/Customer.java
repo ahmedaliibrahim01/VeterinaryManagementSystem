@@ -1,22 +1,18 @@
 package com.ahmed.veterinaryManagementSystem.model;
 
+import com.fasterxml.jackson.annotation.JsonIgnore;
 import jakarta.persistence.*;
 import jakarta.validation.constraints.NotNull;
-import lombok.AllArgsConstructor;
-import lombok.Data;
-import lombok.NoArgsConstructor;
+import lombok.*;
 
 import java.util.Set;
 
 @Entity
 @Data
-@AllArgsConstructor
-@NoArgsConstructor
 public class Customer {
     @Id
     @GeneratedValue(strategy = GenerationType.IDENTITY)
     private Long id;
-    @NotNull
     private String name;
     private String phone;
     private String mail;
@@ -24,5 +20,6 @@ public class Customer {
     private String city;
 
     @OneToMany(mappedBy = "customer")
+    @JsonIgnore
     private Set<Animal> animals;
 }

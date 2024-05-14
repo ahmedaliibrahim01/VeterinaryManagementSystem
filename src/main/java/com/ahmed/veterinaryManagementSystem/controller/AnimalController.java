@@ -10,6 +10,7 @@ import java.util.List;
 @RestController
 @RequestMapping("/v1/animals")
 public class AnimalController {
+    /*
     private final AnimalService animalService;
 
     public AnimalController(AnimalService animalService) {
@@ -44,4 +45,6 @@ public class AnimalController {
     public void delete(@PathVariable("id") Long id) {
         this.animalService.delete(id);
     }
+
+     */
 }
