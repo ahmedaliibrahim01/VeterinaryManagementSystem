@@ -8,9 +8,16 @@ import java.util.List;
 
 public interface AnimalService {
     void save(Animal animal);
+
     Animal update(Animal animal);
+
     Animal findById(Long id);
+
     List<Animal> findByName(String name);
-    Page<Animal> cursor (int page, int pageSize);
+
+    Page<Animal> cursor(int page, int pageSize);
+
     void delete(Long id);
+    List<Animal> findByOwnerId(Long ownerId);
+
 }

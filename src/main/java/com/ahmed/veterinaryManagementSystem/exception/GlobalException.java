@@ -13,20 +13,21 @@ import org.springframework.web.bind.annotation.ControllerAdvice;
 import org.springframework.web.bind.annotation.ExceptionHandler;
 
 import java.util.List;
+
 @ControllerAdvice
 public class GlobalException {
     @ExceptionHandler(EntityNotFoundException.class)
-    public ResponseEntity<Result> handleNotFoundException (EntityNotFoundException ex){
-        return new ResponseEntity<>(ResultInfo.notFoundError(ex.getMessage()),HttpStatus.NOT_FOUND);
+    public ResponseEntity<Result> handleNotFoundException(EntityNotFoundException ex) {
+        return new ResponseEntity<>(ResultInfo.notFoundError(ex.getMessage()), HttpStatus.NOT_FOUND);
     }
 
     @ExceptionHandler(IllegalArgumentException.class)
-    public ResponseEntity<Result> handleIllegalArgumentException (IllegalArgumentException ex){
+    public ResponseEntity<Result> handleIllegalArgumentException(IllegalArgumentException ex) {
         return new ResponseEntity<>(ResultInfo.alreadyRegistered((ex.getMessage())), HttpStatus.ALREADY_REPORTED);
     }
 
     @ExceptionHandler(MethodArgumentNotValidException.class)
-    public ResponseEntity<ResultData<List<String >>> handleValidationErrors(MethodArgumentNotValidException ex){
+    public ResponseEntity<ResultData<List<String>>> handleValidationErrors(MethodArgumentNotValidException ex) {
         List<String> validationErrorList = ex.getBindingResult()
                 .getFieldErrors().stream()
                 .map(FieldError::getDefaultMessage).toList();

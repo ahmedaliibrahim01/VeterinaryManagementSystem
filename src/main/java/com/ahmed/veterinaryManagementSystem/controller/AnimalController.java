@@ -8,9 +8,7 @@ import com.ahmed.veterinaryManagementSystem.dto.request.animal.AnimalSaveRequest
 import com.ahmed.veterinaryManagementSystem.dto.request.animal.AnimalUpdateRequest;
 import com.ahmed.veterinaryManagementSystem.dto.response.CursorResponse;
 import com.ahmed.veterinaryManagementSystem.dto.response.animal.AnimalResponse;
-import com.ahmed.veterinaryManagementSystem.dto.response.customer.CustomerResponse;
 import com.ahmed.veterinaryManagementSystem.model.Animal;
-import com.ahmed.veterinaryManagementSystem.model.Customer;
 import com.ahmed.veterinaryManagementSystem.service.abstracts.AnimalService;
 import jakarta.validation.Valid;
 import org.springframework.data.domain.Page;
@@ -30,8 +28,6 @@ public class AnimalController {
         this.animalService = animalService;
         this.modelMapper = modelMapper;
     }
-
-
     @PostMapping()
     @ResponseStatus(HttpStatus.CREATED)
     public ResultData<AnimalResponse> save(@Valid @RequestBody AnimalSaveRequest animalSaveRequest) {
@@ -84,4 +80,14 @@ public class AnimalController {
         this.animalService.delete(id);
         return ResultInfo.ok();
     }
+
+    @GetMapping("/customer/{customerId}")
+    public ResultData<List<AnimalResponse>> findByOwnerId(@PathVariable("customer") Long ownerId) {
+        List<Animal> animals = this.animalService.findByOwnerId(ownerId);
+        List<AnimalResponse> animalResponses = animals.stream()
+                .map(animal -> this.modelMapper.forResponse().map(animal, AnimalResponse.class))
+                .collect(Collectors.toList());
+        return ResultInfo.success(animalResponses);
+    }
+
 }

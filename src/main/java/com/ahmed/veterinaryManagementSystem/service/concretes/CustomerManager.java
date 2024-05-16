@@ -1,5 +1,6 @@
 package com.ahmed.veterinaryManagementSystem.service.concretes;
 
+import com.ahmed.veterinaryManagementSystem.model.Animal;
 import com.ahmed.veterinaryManagementSystem.model.Customer;
 import com.ahmed.veterinaryManagementSystem.repository.CustomerRepository;
 import com.ahmed.veterinaryManagementSystem.service.abstracts.CustomerService;
@@ -21,10 +22,9 @@ public class CustomerManager implements CustomerService {
 
     @Override
     public void save(Customer customer) {
-            if (customerRepository.findByMail(customer.getMail()).isPresent()) {
-                throw new IllegalArgumentException("Email address is already registered.");
-            }
-        this.customerRepository.save(customer);
+        if (customerRepository.findByMail(customer.getMail()).isPresent()) {
+            throw new IllegalArgumentException("Email address is already registered.");
+        }
     }
 
     @Override

@@ -10,12 +10,7 @@ import org.springframework.stereotype.Controller;
 @Configuration
 public class ModelMapperConfig {
     @Bean
-    ModelMapper modelMapper(){
-        /*
-        ModelMapper modelMapper = new ModelMapper();
-        modelMapper.getConfiguration().setMatchingStrategy(MatchingStrategies.LOOSE);
-
-         */
+    ModelMapper modelMapper() {
         return new ModelMapper();
     }
 }

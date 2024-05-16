@@ -6,8 +6,10 @@ import com.ahmed.veterinaryManagementSystem.core.result.ResultData;
 import com.ahmed.veterinaryManagementSystem.core.utils.ResultInfo;
 import com.ahmed.veterinaryManagementSystem.dto.request.customer.CustomerUpdateRequest;
 import com.ahmed.veterinaryManagementSystem.dto.response.CursorResponse;
+import com.ahmed.veterinaryManagementSystem.dto.response.animal.AnimalResponse;
 import com.ahmed.veterinaryManagementSystem.dto.response.customer.CustomerResponse;
 import com.ahmed.veterinaryManagementSystem.dto.request.customer.CustomerSaveRequest;
+import com.ahmed.veterinaryManagementSystem.model.Animal;
 import com.ahmed.veterinaryManagementSystem.model.Customer;
 import com.ahmed.veterinaryManagementSystem.service.abstracts.CustomerService;
 import jakarta.validation.Valid;
@@ -41,7 +43,7 @@ public class CustomerController {
 
     @GetMapping("/{id}")
     @ResponseStatus(HttpStatus.OK)
-    public ResultData<CustomerResponse> findById(@PathVariable("id") Long id){
+    public ResultData<CustomerResponse> findById(@PathVariable("id") Long id) {
         Customer customer = this.customerService.findById(id);
         return ResultInfo.success(this.modelMapper.forResponse().map(customer, CustomerResponse.class));
     }
@@ -57,10 +59,10 @@ public class CustomerController {
 
     @GetMapping()
     public ResultData<CursorResponse<CustomerResponse>> findAll(
-            @RequestParam(name = "page", required = false,defaultValue = "0") int page,
-            @RequestParam(name = "pageSize", required = false,defaultValue = "10") int pageSize
-    ){
-        Page<Customer> customerPage = this.customerService.cursor(page,pageSize);
+            @RequestParam(name = "page", required = false, defaultValue = "0") int page,
+            @RequestParam(name = "pageSize", required = false, defaultValue = "10") int pageSize
+    ) {
+        Page<Customer> customerPage = this.customerService.cursor(page, pageSize);
         Page<CustomerResponse> customerResponsePage = customerPage
                 .map(customer -> this.modelMapper.forResponse().map(customer, CustomerResponse.class));
         return ResultInfo.cursor(customerResponsePage);
@@ -77,7 +79,7 @@ public class CustomerController {
 
     @DeleteMapping("/{id}")
     @ResponseStatus(HttpStatus.OK)
-    public Result delete(@PathVariable("id") Long id){
+    public Result delete(@PathVariable("id") Long id) {
         this.customerService.delete(id);
         return ResultInfo.ok();
     }

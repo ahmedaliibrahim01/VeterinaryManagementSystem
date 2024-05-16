@@ -1,4 +1,4 @@
- package com.ahmed.veterinaryManagementSystem.dto.request.customer;
+package com.ahmed.veterinaryManagementSystem.dto.request.customer;
 
 import jakarta.persistence.Id;
 import jakarta.validation.constraints.Email;

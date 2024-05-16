@@ -21,6 +21,5 @@ public class Customer {
     private String city;
 
     @OneToMany(mappedBy = "customer")
-    @JsonIgnore
     private Set<Animal> animals;
 }
