@@ -1,51 +1,60 @@
 package com.ahmed.veterinaryManagementSystem.service.concretes;
 
 import com.ahmed.veterinaryManagementSystem.model.Animal;
-import com.ahmed.veterinaryManagementSystem.model.Customer;
 import com.ahmed.veterinaryManagementSystem.repository.AnimalRepository;
 import com.ahmed.veterinaryManagementSystem.service.abstracts.AnimalService;
-import com.ahmed.veterinaryManagementSystem.service.abstracts.CustomerService;
+import jakarta.persistence.EntityNotFoundException;
+import org.springframework.data.domain.Page;
+import org.springframework.data.domain.PageRequest;
+import org.springframework.data.domain.Pageable;
 import org.springframework.stereotype.Service;
 
 import java.util.List;
 
 @Service
 public class AnimalManager implements AnimalService {
-    private final AnimalRepository animalRepository;
-    private final CustomerManager customerManager;
 
-    public AnimalManager(AnimalRepository animalRepository, CustomerManager customerManager) {
+    private final AnimalRepository animalRepository;
+
+    public AnimalManager(AnimalRepository animalRepository) {
         this.animalRepository = animalRepository;
-        this.customerManager = customerManager;
     }
 
     @Override
-    public Animal save(Animal animal) {
-        Customer customer = customerManager.findById(animal.getCustomer().getId());
-        if (customer == null) {
-            throw new IllegalArgumentException("Customer not found with id: " + animal.getCustomer().getId());
-        }
-        return animalRepository.save(animal);
+    public void save(Animal animal) {
+        this.animalRepository.save(animal);
     }
 
     @Override
     public Animal findById(Long id) {
-        return animalRepository.findById(id).orElseThrow(() -> new IllegalArgumentException("Animal not found with id: " + id));
+        return animalRepository.findById(id)
+                .orElseThrow(() -> new EntityNotFoundException("Animal not found."));
     }
 
     @Override
-    public List<Animal> findAll() {
-        return animalRepository.findAll();
+    public List<Animal> findByName(String name) {
+        List<Animal> animals = animalRepository.findByName(name);
+        if (animals.isEmpty()) {
+            throw new EntityNotFoundException("Animal not found");
+        }
+        return animals;
+    }
+
+    @Override
+    public Page<Animal> cursor(int page, int pageSize) {
+        Pageable pageable = PageRequest.of(page, pageSize);
+        return this.animalRepository.findAll(pageable);
     }
 
     @Override
     public Animal update(Animal animal) {
-        return animalRepository.save(animal);
+        this.findById(animal.getId());
+        return this.animalRepository.save(animal);
     }
 
     @Override
     public void delete(Long id) {
         Animal animal = findById(id);
-        animalRepository.delete(animal);
+        this.animalRepository.delete(animal);
     }
 }

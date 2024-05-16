@@ -1,13 +1,16 @@
 package com.ahmed.veterinaryManagementSystem.service.abstracts;
 
 import com.ahmed.veterinaryManagementSystem.model.Animal;
+import com.ahmed.veterinaryManagementSystem.model.Customer;
+import org.springframework.data.domain.Page;
 
 import java.util.List;
 
 public interface AnimalService {
-    Animal save(Animal animal);
-    Animal findById(Long id);
-    List<Animal> findAll();
+    void save(Animal animal);
     Animal update(Animal animal);
+    Animal findById(Long id);
+    List<Animal> findByName(String name);
+    Page<Animal> cursor (int page, int pageSize);
     void delete(Long id);
 }

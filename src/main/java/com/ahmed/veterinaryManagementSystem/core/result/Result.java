@@ -7,11 +7,11 @@ import lombok.Getter;
 public class Result {
     private boolean success;
     private String message;
-    private String httpCode;
+    private String code;
 
-    public Result(boolean success, String message, String httpCode) {
+    public Result(boolean success, String message, String code) {
         this.success = success;
         this.message = message;
-        this.httpCode = httpCode;
+        this.code = code;
     }
 }

@@ -1,15 +1,15 @@
-package com.ahmed.veterinaryManagementSystem.dto.animal;
+package com.ahmed.veterinaryManagementSystem.dto.response.animal;
 
+import jakarta.persistence.GeneratedValue;
+import jakarta.persistence.GenerationType;
+import jakarta.persistence.Id;
 import jakarta.validation.constraints.NotNull;
-import lombok.AllArgsConstructor;
 import lombok.Data;
-import lombok.NoArgsConstructor;
 
 import java.time.LocalDate;
+
 @Data
-@AllArgsConstructor
-@NoArgsConstructor
-public class AnimalDto {
+public class AnimalResponse {
     private Long id;
     private String name;
     private String species;

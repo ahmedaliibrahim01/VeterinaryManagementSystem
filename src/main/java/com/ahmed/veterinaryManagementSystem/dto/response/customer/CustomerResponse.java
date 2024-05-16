@@ -1,4 +1,4 @@
-package com.ahmed.veterinaryManagementSystem.dto.customer;
+package com.ahmed.veterinaryManagementSystem.dto.response.customer;
 
 import lombok.Data;
 

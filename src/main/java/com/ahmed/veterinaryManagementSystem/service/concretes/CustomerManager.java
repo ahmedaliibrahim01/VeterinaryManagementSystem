@@ -4,6 +4,9 @@ import com.ahmed.veterinaryManagementSystem.model.Customer;
 import com.ahmed.veterinaryManagementSystem.repository.CustomerRepository;
 import com.ahmed.veterinaryManagementSystem.service.abstracts.CustomerService;
 import jakarta.persistence.EntityNotFoundException;
+import org.springframework.data.domain.Page;
+import org.springframework.data.domain.PageRequest;
+import org.springframework.data.domain.Pageable;
 import org.springframework.stereotype.Service;
 
 import java.util.List;
@@ -17,34 +20,46 @@ public class CustomerManager implements CustomerService {
     }
 
     @Override
-    public Customer save(Customer customer) {
-        // Check if email already exists
-        if (customerRepository.findByMail(customer.getMail()).isPresent()) {
-            throw new IllegalArgumentException("Email address is already registered.");
-        }
-        return customerRepository.save(customer);
+    public void save(Customer customer) {
+            if (customerRepository.findByMail(customer.getMail()).isPresent()) {
+                throw new IllegalArgumentException("Email address is already registered.");
+            }
+        this.customerRepository.save(customer);
     }
 
     @Override
     public Customer findById(Long id) {
         return customerRepository.findById(id)
-                .orElseThrow(() -> new EntityNotFoundException("Customer not found with id: " + id));
+                .orElseThrow(() -> new EntityNotFoundException("Customer not found."));
     }
 
     @Override
-    public List<Customer> findAll() {
-        return customerRepository.findAll();
+    public List<Customer> findByName(String name) {
+        List<Customer> customers = customerRepository.findByName(name);
+        if (customers.isEmpty()) {
+            throw new EntityNotFoundException("Customer not found");
+        }
+        return customers;
+    }
+
+    @Override
+    public Page<Customer> cursor(int page, int pageSize) {
+        Pageable pageable = PageRequest.of(page, pageSize);
+        return this.customerRepository.findAll(pageable);
     }
 
     @Override
     public Customer update(Customer customer) {
-        // Assuming the customer already exists in the database
-        return customerRepository.save(customer);
+        Customer existingCustomer = this.findById(customer.getId());
+        if (customer.getMail() == null) {
+            customer.setMail(existingCustomer.getMail());
+        }
+        return this.customerRepository.save(customer);
     }
 
     @Override
     public void delete(Long id) {
         Customer customer = findById(id);
-        customerRepository.delete(customer);
+        this.customerRepository.delete(customer);
     }
 }
