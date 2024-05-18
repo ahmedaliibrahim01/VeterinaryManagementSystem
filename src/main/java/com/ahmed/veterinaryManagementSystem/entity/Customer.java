@@ -1,6 +1,5 @@
-package com.ahmed.veterinaryManagementSystem.model;
+package com.ahmed.veterinaryManagementSystem.entity;
 
-import com.fasterxml.jackson.annotation.JsonIgnore;
 import jakarta.persistence.*;
 import jakarta.validation.constraints.NotNull;
 import lombok.*;

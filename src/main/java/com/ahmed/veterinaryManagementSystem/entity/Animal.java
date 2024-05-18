@@ -1,10 +1,9 @@
-package com.ahmed.veterinaryManagementSystem.model;
+package com.ahmed.veterinaryManagementSystem.entity;
 
+import com.fasterxml.jackson.annotation.JsonIgnore;
 import jakarta.persistence.*;
 import jakarta.validation.constraints.NotNull;
-import lombok.AllArgsConstructor;
 import lombok.Data;
-import lombok.NoArgsConstructor;
 
 import java.time.LocalDate;
 import java.util.Set;
@@ -26,5 +25,12 @@ public class Animal {
     @ManyToOne()
     @NotNull
     @JoinColumn(name = "customer_id", referencedColumnName = "id")
+    @JsonIgnore
     private Customer customer;
+
+    @OneToMany(mappedBy = "animal")
+    private Set<Vaccine> vaccines;
+
+    @OneToMany(mappedBy = "animal")
+    private Set<Appointment> appointments;
 }

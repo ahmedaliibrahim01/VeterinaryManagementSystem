@@ -1,9 +1,9 @@
-package com.ahmed.veterinaryManagementSystem.dto.response.customer;
+package com.ahmed.veterinaryManagementSystem.dto.response;
 
 import lombok.Data;
 
 @Data
-public class CustomerResponse {
+public class DoctorResponse {
     private Long id;
     private String name;
     private String phone;

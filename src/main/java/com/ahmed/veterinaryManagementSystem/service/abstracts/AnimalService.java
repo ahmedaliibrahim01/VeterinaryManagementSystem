@@ -1,23 +1,24 @@
 package com.ahmed.veterinaryManagementSystem.service.abstracts;
 
-import com.ahmed.veterinaryManagementSystem.model.Animal;
-import com.ahmed.veterinaryManagementSystem.model.Customer;
-import org.springframework.data.domain.Page;
+import com.ahmed.veterinaryManagementSystem.core.result.Result;
+import com.ahmed.veterinaryManagementSystem.core.result.ResultData;
+import com.ahmed.veterinaryManagementSystem.dto.request.AnimalSaveRequest;
+import com.ahmed.veterinaryManagementSystem.dto.request.AnimalUpdateRequest;
+import com.ahmed.veterinaryManagementSystem.dto.response.AnimalResponse;
 
 import java.util.List;
 
 public interface AnimalService {
-    void save(Animal animal);
+    ResultData<AnimalResponse> save(AnimalSaveRequest animalSaveRequest);
 
-    Animal update(Animal animal);
+    ResultData<AnimalResponse> update(AnimalUpdateRequest animalUpdateRequest);
 
-    Animal findById(Long id);
+    ResultData<AnimalResponse> findById(Long id);
 
-    List<Animal> findByName(String name);
+    ResultData<List<AnimalResponse>> findByName(String name);
 
-    Page<Animal> cursor(int page, int pageSize);
+    ResultData<List<AnimalResponse>> findAll ();
 
-    void delete(Long id);
-    List<Animal> findByOwnerId(Long ownerId);
-
+    Result delete(Long id);
+    ResultData<List<AnimalResponse>> findByCustomerId(Long customerId);
 }

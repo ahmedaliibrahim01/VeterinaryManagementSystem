@@ -2,11 +2,6 @@ package com.ahmed.veterinaryManagementSystem.core.utils;
 
 import com.ahmed.veterinaryManagementSystem.core.result.Result;
 import com.ahmed.veterinaryManagementSystem.core.result.ResultData;
-import com.ahmed.veterinaryManagementSystem.dto.response.CursorResponse;
-import com.ahmed.veterinaryManagementSystem.dto.response.customer.CustomerResponse;
-import org.springframework.data.domain.Page;
-
-import java.util.List;
 
 public class ResultInfo {
     public static <T> ResultData<T> created(T data) {
@@ -37,12 +32,4 @@ public class ResultInfo {
         return new Result(false, message, "400");
     }
 
-    public static <T> ResultData<CursorResponse<T>> cursor(Page<T> pageData) {
-        CursorResponse<T> cursor = new CursorResponse<>();
-        cursor.setItems(pageData.getContent());
-        cursor.setPageNumber(pageData.getNumber());
-        cursor.setPageSize(pageData.getSize());
-        cursor.setTotalElement(pageData.getTotalElements());
-        return ResultInfo.success(cursor);
-    }
 }

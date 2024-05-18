@@ -1,4 +1,4 @@
-package com.ahmed.veterinaryManagementSystem.dto.request.animal;
+package com.ahmed.veterinaryManagementSystem.dto.request;
 
 import jakarta.validation.constraints.NotNull;
 import jakarta.validation.constraints.Positive;
@@ -19,5 +19,8 @@ public class AnimalUpdateRequest {
     private String gender;
     private String colour;
     private LocalDate dateOfBirth;
+    @NotNull(message = "Customer id cannot be empty.")
+    @NotNull(message = "Customer id cannot be null.")
+    @Positive(message = "Customer id must be positive.")
     private Long customerId;
 }
