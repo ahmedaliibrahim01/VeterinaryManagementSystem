@@ -5,7 +5,11 @@ import jakarta.validation.constraints.Positive;
 import lombok.Data;
 
 import java.time.LocalDate;
-
+/**
+ * The AnimalUpdateRequest class represents the request data for updating an existing animal in the veterinary management system.
+ * It contains fields such as the animal's ID, name, species, breed, gender, color, date of birth, and the ID of the customer who owns the animal.
+ * The animal ID is necessary to identify the specific animal to be updated, while the customer ID is needed to associate the animal with its owner in the system.
+ */
 @Data
 public class AnimalUpdateRequest {
     @NotNull(message = "Animal name cannot be empty.")

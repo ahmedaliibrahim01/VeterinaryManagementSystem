@@ -8,17 +8,30 @@ import com.ahmed.veterinaryManagementSystem.dto.response.AnimalResponse;
 
 import java.util.List;
 
+/**
+ * The AnimalService interface defines the contract for managing animal-related operations in the veterinary management system.
+ * It includes methods for saving, updating, finding by various criteria, and deleting animals.
+ */
 public interface AnimalService {
-    ResultData<AnimalResponse> save(AnimalSaveRequest animalSaveRequest);
 
-    ResultData<AnimalResponse> update(AnimalUpdateRequest animalUpdateRequest);
+    // Saves a new animal
+    ResultData<AnimalResponse> saveAnimal(AnimalSaveRequest animalSaveRequest);
 
-    ResultData<AnimalResponse> findById(Long id);
+    // Updates an existing animal
+    ResultData<AnimalResponse> updateAnimal(AnimalUpdateRequest animalUpdateRequest);
 
-    ResultData<List<AnimalResponse>> findByName(String name);
+    // Finds an animal by its ID
+    ResultData<AnimalResponse> findAnimalById(Long id);
 
-    ResultData<List<AnimalResponse>> findAll ();
+    // Finds animals by their name
+    ResultData<List<AnimalResponse>> findAnimalByName(String name);
 
-    Result delete(Long id);
+    // Retrieves all animals
+    ResultData<List<AnimalResponse>> findAllAnimals();
+
+    // Deletes an animal by its ID
+    Result deleteAnimal(Long id);
+
+    // Finds animals by customer ID
     ResultData<List<AnimalResponse>> findByCustomerId(Long customerId);
 }

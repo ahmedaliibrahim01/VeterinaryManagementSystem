@@ -8,16 +8,25 @@ import com.ahmed.veterinaryManagementSystem.dto.response.CustomerResponse;
 
 import java.util.List;
 
+/**
+ * The CustomerService interface defines methods to manage customer-related operations.
+ */
 public interface CustomerService {
-    ResultData<CustomerResponse> save(CustomerSaveRequest customerSaveRequest);
-    ResultData<CustomerResponse> update(CustomerUpdateRequest customerUpdateRequest);
+    // Saves a new customer.
+    ResultData<CustomerResponse> saveCustomer(CustomerSaveRequest customerSaveRequest);
 
-    ResultData<CustomerResponse> findById(Long id);
+    // Updates an existing customer.
+    ResultData<CustomerResponse> updateCustomer(CustomerUpdateRequest customerUpdateRequest);
 
-    ResultData<List<CustomerResponse>> findByName(String name);
+    // Finds a customer by their ID.
+    ResultData<CustomerResponse> findCustomerById(Long id);
 
-    ResultData<List<CustomerResponse>> findAll();
+    // Finds customers by their name.
+    ResultData<List<CustomerResponse>> findCustomerByName(String name);
 
-    Result delete(Long id);
+    // Finds all customers.
+    ResultData<List<CustomerResponse>> findAllCustomers();
 
+    // Deletes a customer by their ID.
+    Result deleteCustomer(Long id);
 }

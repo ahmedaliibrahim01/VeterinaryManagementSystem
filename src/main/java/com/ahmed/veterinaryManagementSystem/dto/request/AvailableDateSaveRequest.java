@@ -5,6 +5,11 @@ import jakarta.validation.constraints.Positive;
 import lombok.Data;
 
 import java.time.LocalDate;
+/**
+ * The AvailableDateSaveRequest class represents the request for creating a new AvailableDate instance.
+ * It contains the necessary information to create an AvailableDate object, including the date and the ID of the associated doctor.
+ * The @Data annotation from Lombok generates getter and setter methods for all fields automatically.
+ */
 
 @Data
 public class AvailableDateSaveRequest {

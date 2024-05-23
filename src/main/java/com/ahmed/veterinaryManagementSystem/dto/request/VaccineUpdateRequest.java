@@ -6,6 +6,12 @@ import lombok.Data;
 
 import java.time.LocalDate;
 
+/**
+ * The VaccineUpdateRequest class represents the request data for updating an existing vaccine in the veterinary management system.
+ * It contains fields such as the vaccine's ID, name, code, start and finish dates of protection, and the ID of the animal to which the vaccine is administered.
+ * The vaccine ID is necessary to identify the vaccine to be updated.
+ * The animal ID is necessary to associate the vaccine with the corresponding animal in the system.
+ */
 @Data
 public class VaccineUpdateRequest {
     @NotNull(message = "Vaccine id cannot be null.")

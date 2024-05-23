@@ -1,6 +1,6 @@
 package com.ahmed.veterinaryManagementSystem.service.concretes;
 
-import com.ahmed.veterinaryManagementSystem.dto.mapper.CustomerMapper;
+import com.ahmed.veterinaryManagementSystem.dto.converter.CustomerConverter;
 import com.ahmed.veterinaryManagementSystem.core.result.Result;
 import com.ahmed.veterinaryManagementSystem.core.result.ResultData;
 import com.ahmed.veterinaryManagementSystem.core.utils.ResultInfo;
@@ -16,80 +16,101 @@ import org.springframework.stereotype.Service;
 import java.util.List;
 import java.util.stream.Collectors;
 
-
+/**
+ * The CustomerManager class implements the CustomerService interface and provides methods
+ * to manage customer-related operations.
+ */
 @Service
 public class CustomerManager implements CustomerService {
     private final CustomerRepository customerRepository;
-    private final CustomerMapper mapper;
+    private final CustomerConverter customerConverter;
 
-    public CustomerManager(CustomerRepository customerRepository, CustomerMapper mapper) {
+    // Initializes a new instance of the CustomerManager class with the specified repository and converter.
+    public CustomerManager(CustomerRepository customerRepository, CustomerConverter customerConverter) {
         this.customerRepository = customerRepository;
-        this.mapper = mapper;
+        this.customerConverter = customerConverter;
     }
+
     @Override
-    public ResultData<CustomerResponse> save(CustomerSaveRequest customerSaveRequest) {
-        Customer saveCustomer = this.mapper.saveCustomer(customerSaveRequest);
-        if (customerRepository.findByMail(saveCustomer.getMail()).isPresent()) {
-            throw new IllegalArgumentException("Email address " + saveCustomer.getMail() + " is already registered.");
-        }
-        if (customerRepository.findByPhone(saveCustomer.getPhone()).isPresent()) {
-            throw new IllegalArgumentException("Phone " + saveCustomer.getPhone() + " is already registered.");
-        }
+    public ResultData<CustomerResponse> saveCustomer(CustomerSaveRequest customerSaveRequest) {
+        // Convert the request DTO to an entity
+        Customer saveCustomer = this.customerConverter.convertToCustomer(customerSaveRequest);
+
+        // Check if the saveCustomer already exists
+        checkCustomerExistence(saveCustomer);
+
+        // Save the saveCustomer entity
         this.customerRepository.save(saveCustomer);
-        return ResultInfo.created(this.mapper.toCustomerResponse(saveCustomer));
+
+        // Return the created saveCustomer response
+        return ResultInfo.success(this.customerConverter.toCustomerResponse(saveCustomer));
     }
 
-    @Override
-    public ResultData<CustomerResponse> update(CustomerUpdateRequest customerUpdateRequest) {
-        Long customerId = customerUpdateRequest.getId();
-        Customer existingCustomer = this.customerRepository.findById(customerId)
-                .orElseThrow(() -> new EntityNotFoundException("Customer with ID " + customerId + " not found."));
 
-        Customer updatedCustomer = this.mapper.updateCustomer(customerUpdateRequest);
-        updatedCustomer.setId(customerId);
+    @Override
+    public ResultData<CustomerResponse> updateCustomer(CustomerUpdateRequest customerUpdateRequest) {
+        // Find the existing customer by ID
+        findCustomerById(customerUpdateRequest.getId());
+
+        // Convert the request DTO to an updated customer entity
+        Customer updatedCustomer = this.customerConverter.convertToUpdatedCustomer(customerUpdateRequest);
+
+        // Set the ID of the updated customer
+        updatedCustomer.setId(customerUpdateRequest.getId());
+
+        // Save the updated customer entity
         this.customerRepository.save(updatedCustomer);
 
-        return ResultInfo.success(this.mapper.toCustomerResponse(updatedCustomer));
+        // Return the updated customer response
+        return ResultInfo.success(this.customerConverter.toCustomerResponse(updatedCustomer));
+    }
+
+
+    // Finds a customer by their ID.
+    public Customer findCustomerId(Long customerId) {
+        return this.customerRepository.findById(customerId).orElseThrow(()
+                -> new EntityNotFoundException("Customer with ID " + customerId + " not found"));
     }
 
     @Override
-    public ResultData<CustomerResponse> findById(Long id) {
-        Customer customer = this.customerRepository.findById(id)
-                .orElseThrow(() -> new EntityNotFoundException("Customer with ID " + id + " not found."));
-        return ResultInfo.success(this.mapper.toCustomerResponse(customer));
+    public ResultData<CustomerResponse> findCustomerById(Long id) {
+        Customer customer = findCustomerId(id);
+        return ResultInfo.success(this.customerConverter.toCustomerResponse(customer));
     }
 
     @Override
-    public ResultData<List<CustomerResponse>> findByName(String name) {
+    public ResultData<List<CustomerResponse>> findCustomerByName(String name) {
         List<Customer> customers = customerRepository.findByName(name);
         if (customers.isEmpty()) {
             throw new EntityNotFoundException("Customer with name " + name + " not found.");
         }
         List<CustomerResponse> customerResponses = customers.stream()
-                .map(this.mapper::toCustomerResponse)
-                .collect(Collectors.toList());
+                .map(this.customerConverter::toCustomerResponse).collect(Collectors.toList());
         return ResultInfo.success(customerResponses);
     }
 
     @Override
-    public ResultData<List<CustomerResponse>> findAll() {
+    public ResultData<List<CustomerResponse>> findAllCustomers() {
         List<Customer> allCustomers = this.customerRepository.findAll();
         List<CustomerResponse> customerResponses = allCustomers.stream()
-                .map(this.mapper::toCustomerResponse)
-                .collect(Collectors.toList());
+                .map(this.customerConverter::toCustomerResponse).collect(Collectors.toList());
         return ResultInfo.success(customerResponses);
     }
 
     @Override
-    public Result delete(Long id) {
-        Customer customer = this.customerRepository.findById(id)
-                .orElseThrow(() -> new EntityNotFoundException("Customer with ID " + id + " not found."));
+    public Result deleteCustomer(Long id) {
+        Customer customer = findCustomerId(id);
         this.customerRepository.delete(customer);
         return ResultInfo.ok();
     }
 
-    public Customer findCustomerId(Long customerId){
-        return this.customerRepository.findById(customerId)
-                .orElseThrow(() -> new EntityNotFoundException("Customer with ID " + customerId + " not found"));
+    // Checks if a customer already exists based on their email and phone.
+    private void checkCustomerExistence(Customer customer) {
+        if (customerRepository.existsByMail(customer.getMail())) {
+            throw new IllegalArgumentException("Email address " + customer.getMail() + " is already registered.");
+        }
+        if (customerRepository.existsByPhone(customer.getPhone())) {
+            throw new IllegalArgumentException("Phone " + customer.getPhone() + " is already registered.");
+        }
     }
 }

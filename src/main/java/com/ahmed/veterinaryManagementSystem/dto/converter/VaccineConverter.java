@@ -1,4 +1,4 @@
-package com.ahmed.veterinaryManagementSystem.dto.mapper;
+package com.ahmed.veterinaryManagementSystem.dto.converter;
 
 import com.ahmed.veterinaryManagementSystem.dto.request.VaccineSaveRequest;
 import com.ahmed.veterinaryManagementSystem.dto.request.VaccineUpdateRequest;
@@ -8,15 +8,25 @@ import com.ahmed.veterinaryManagementSystem.entity.Vaccine;
 import com.ahmed.veterinaryManagementSystem.repository.AnimalRepository;
 import org.springframework.stereotype.Component;
 
+/**
+ * The VaccineConverter class provides methods to convert between different representations of vaccine data.
+ * It includes methods for converting VaccineSaveRequest and VaccineUpdateRequest objects to Vaccine entities,
+ * as well as converting Vaccine entities to VaccineResponse objects.
+ */
 @Component
-public class VaccineMapper {
+public class VaccineConverter {
     private final AnimalRepository animalRepository;
 
-    public VaccineMapper(AnimalRepository animalRepository) {
+    public VaccineConverter(AnimalRepository animalRepository) {
         this.animalRepository = animalRepository;
     }
 
-    public Vaccine saveVaccine(VaccineSaveRequest vaccineSaveRequest) {
+    /**
+     * Converts a VaccineSaveRequest object to a Vaccine entity.
+     * @param vaccineSaveRequest The VaccineSaveRequest object to convert.
+     * @return The converted Vaccine entity.
+     */
+    public Vaccine convertToVaccine(VaccineSaveRequest vaccineSaveRequest) {
         if (vaccineSaveRequest == null) {
             return null;
         }
@@ -29,8 +39,14 @@ public class VaccineMapper {
         vaccine.setAnimal(animal);
         return vaccine;
     }
-    public Vaccine updateVaccine(VaccineUpdateRequest vaccineUpdateRequest){
-        if(vaccineUpdateRequest == null){
+
+    /**
+     * Converts a VaccineUpdateRequest object to a Vaccine entity.
+     * @param vaccineUpdateRequest The VaccineUpdateRequest object to convert.
+     * @return The converted Vaccine entity.
+     */
+    public Vaccine convertToUpdateVaccine(VaccineUpdateRequest vaccineUpdateRequest) {
+        if (vaccineUpdateRequest == null) {
             return null;
         }
         Vaccine vaccine = new Vaccine();
@@ -43,6 +59,12 @@ public class VaccineMapper {
         vaccine.setAnimal(animal);
         return vaccine;
     }
+
+    /**
+     * Converts a Vaccine entity to a VaccineResponse object.
+     * @param vaccine The Vaccine entity to convert.
+     * @return The converted VaccineResponse object.
+     */
     public VaccineResponse toVaccineResponse(Vaccine vaccine) {
         if (vaccine == null) {
             return null;

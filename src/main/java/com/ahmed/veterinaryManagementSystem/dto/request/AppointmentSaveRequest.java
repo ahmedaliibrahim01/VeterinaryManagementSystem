@@ -1,13 +1,13 @@
 package com.ahmed.veterinaryManagementSystem.dto.request;
 
-import jakarta.validation.constraints.Email;
 import jakarta.validation.constraints.NotNull;
 import jakarta.validation.constraints.Positive;
 import lombok.Data;
 
-import java.time.LocalDate;
 import java.time.LocalDateTime;
-
+/**
+ * The AppointmentSaveRequest class is a data transfer object used for creating new appointments.
+ */
 @Data
 public class AppointmentSaveRequest {
     @NotNull(message = "Appointment Date and Time cannot be empty")
@@ -20,5 +20,4 @@ public class AppointmentSaveRequest {
     @NotNull(message = "Animal id cannot be null.")
     @Positive(message = "Animal id must be positive.")
     private Long doctorId;
-
 }

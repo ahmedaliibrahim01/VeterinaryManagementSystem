@@ -17,46 +17,54 @@ import java.util.List;
 public class AnimalController {
     private final AnimalService animalService;
 
+    // Constructor of the AnimalController class
     public AnimalController(AnimalService animalService) {
         this.animalService = animalService;
     }
 
+    // POST request to save a new animal
     @PostMapping()
     @ResponseStatus(HttpStatus.CREATED)
-    public ResultData<AnimalResponse> save(@Valid @RequestBody AnimalSaveRequest animalSaveRequest) {
-        return this.animalService.save(animalSaveRequest);
+    public ResultData<AnimalResponse> saveAnimal(@Valid @RequestBody AnimalSaveRequest animalSaveRequest) {
+        return this.animalService.saveAnimal(animalSaveRequest);
     }
 
+    // PUT request to update an existing animal
     @PutMapping()
     @ResponseStatus(HttpStatus.OK)
-    public ResultData<AnimalResponse> update(@Valid @RequestBody AnimalUpdateRequest animalUpdateRequest) {
-        return this.animalService.update(animalUpdateRequest);
+    public ResultData<AnimalResponse> updateAnimal(@Valid @RequestBody AnimalUpdateRequest animalUpdateRequest) {
+        return this.animalService.updateAnimal(animalUpdateRequest);
     }
 
-    @GetMapping("/{id}")
-    @ResponseStatus(HttpStatus.OK)
-    public ResultData<AnimalResponse> findById(@PathVariable("id") Long id) {
-        return this.animalService.findById(id);
+    // GET request to find animals by name
+    @GetMapping("/name/{animalName}")
+    public ResultData<List<AnimalResponse>> findAnimalByName(@PathVariable("animalName") String name) {
+        return this.animalService.findAnimalByName(name);
     }
 
-    @GetMapping("/name/{name}")
-    public ResultData<List<AnimalResponse>> findByName(@PathVariable("name") String name) {
-        return this.animalService.findByName(name);
+    // GET request to fetch all animals
+    @GetMapping()
+    public ResultData<List<AnimalResponse>> findAllAnimals() {
+        return this.animalService.findAllAnimals();
     }
 
-    @GetMapping("/find-all")
-    public ResultData<List<AnimalResponse>> findAll() {
-        return this.animalService.findAll();
-    }
-
+    // DELETE request to delete an animal
     @DeleteMapping("/{id}")
     @ResponseStatus(HttpStatus.OK)
-    public Result delete(@PathVariable("id") Long id) {
-        return this.animalService.delete(id);
+    public Result deleteAnimal(@PathVariable("id") Long id) {
+        return this.animalService.deleteAnimal(id);
     }
 
-    @GetMapping("/{customerId}/animals")
-    public ResultData<List<AnimalResponse>> findByCustomerId(@PathVariable("customerId") Long customerId){
+    // GET request to find animals by customer ID
+    @GetMapping("/customer/{customerId}")
+    public ResultData<List<AnimalResponse>> findByCustomerId(@PathVariable("customerId") Long customerId) {
         return this.animalService.findByCustomerId(customerId);
+    }
+
+    // GET request to find an animal by ID
+    @GetMapping("/id/{id}")
+    @ResponseStatus(HttpStatus.OK)
+    public ResultData<AnimalResponse> findAnimalById(@PathVariable("id") Long id) {
+        return this.animalService.findAnimalById(id);
     }
 }

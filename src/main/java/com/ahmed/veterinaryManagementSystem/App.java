@@ -6,11 +6,12 @@ import org.springframework.boot.SpringApplication;
 import org.springframework.boot.autoconfigure.SpringBootApplication;
 
 @SpringBootApplication
-@OpenAPIDefinition(info = @Info(title = "Veterinary Management System", version = "1.0", description = "V"))
+@OpenAPIDefinition(info = @Info(title = "Veterinary Management System",
+        version = "1.0", description = "Developed by Ahmed Ali."))
 public class App {
 
-	public static void main(String[] args) {
-		SpringApplication.run(App.class, args);
-	}
+    public static void main(String[] args) {
+        SpringApplication.run(App.class, args);
+    }
 
 }

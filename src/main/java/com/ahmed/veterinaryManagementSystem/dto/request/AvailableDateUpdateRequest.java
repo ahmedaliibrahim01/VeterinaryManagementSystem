@@ -5,7 +5,12 @@ import jakarta.validation.constraints.Positive;
 import lombok.Data;
 
 import java.time.LocalDate;
-
+/**
+ * The AvailableDateUpdateRequest class represents the request for updating an existing AvailableDate instance.
+ * It contains the necessary information to update an AvailableDate object, including the ID of the AvailableDate,
+ * the new date, and the ID of the associated doctor.
+ * The @Data annotation from Lombok generates getter and setter methods for all fields automatically.
+ */
 @Data
 public class AvailableDateUpdateRequest {
     @NotNull(message = "Available Date id cannot be null.")

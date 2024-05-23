@@ -12,46 +12,56 @@ import org.springframework.web.bind.annotation.*;
 
 import java.util.List;
 
+/**
+ * The CustomerController class defines REST endpoints for managing customer data.
+ */
 @RestController
 @RequestMapping("/v1/customers")
 public class CustomerController {
     private final CustomerService customerService;
 
+    // Initializes a new instance of the CustomerController class with the specified service.
     public CustomerController(CustomerService customerService) {
         this.customerService = customerService;
     }
 
+    // Creates a new customer.
     @PostMapping()
     @ResponseStatus(HttpStatus.CREATED)
-    public ResultData<CustomerResponse> save(@Valid @RequestBody CustomerSaveRequest customerSaveRequest) {
-        return this.customerService.save(customerSaveRequest);
+    public ResultData<CustomerResponse> saveCustomer(@Valid @RequestBody CustomerSaveRequest customerSaveRequest) {
+        return this.customerService.saveCustomer(customerSaveRequest);
     }
 
+    // Updates an existing customer.
     @PutMapping()
     @ResponseStatus(HttpStatus.OK)
-    public ResultData<CustomerResponse> update(@Valid @RequestBody CustomerUpdateRequest customerUpdateRequest) {
-        return this.customerService.update(customerUpdateRequest);
+    public ResultData<CustomerResponse> updateCustomer(@Valid @RequestBody CustomerUpdateRequest customerUpdateRequest) {
+        return this.customerService.updateCustomer(customerUpdateRequest);
     }
 
+    // Finds a customer by their ID.
     @GetMapping("/{id}")
     @ResponseStatus(HttpStatus.OK)
-    public ResultData<CustomerResponse> findById(@PathVariable("id") Long id) {
-        return this.customerService.findById(id);
+    public ResultData<CustomerResponse> findCustomerById(@PathVariable("id") Long id) {
+        return this.customerService.findCustomerById(id);
     }
 
+    // Finds customers by their name.
     @GetMapping("/name/{name}")
-    public ResultData<List<CustomerResponse>> findByName(@PathVariable("name") String name) {
-        return this.customerService.findByName(name);
+    public ResultData<List<CustomerResponse>> findCustomerByName(@PathVariable("name") String name) {
+        return this.customerService.findCustomerByName(name);
     }
 
+    // Finds all customers.
     @GetMapping()
-    public ResultData<List<CustomerResponse>> findAll() {
-        return this.customerService.findAll();
+    public ResultData<List<CustomerResponse>> findAllCustomers() {
+        return this.customerService.findAllCustomers();
     }
 
+    // Deletes a customer by their ID.
     @DeleteMapping("/{id}")
     @ResponseStatus(HttpStatus.OK)
-    public Result delete(@PathVariable("id") Long id) {
-        return this.customerService.delete(id);
+    public Result deleteCustomer(@PathVariable("id") Long id) {
+        return this.customerService.deleteCustomer(id);
     }
 }
